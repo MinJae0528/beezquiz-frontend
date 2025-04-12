@@ -1,5 +1,4 @@
 import MainButton from "./components/MainButton";
-import honeycomb from "./img/honeycomb.jpg";
 import logo from "./img/Logo.png";
 
 export default function Home() {
@@ -12,12 +11,9 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="h-screen flex items-center justify-center px-4 bg-yellow-200"
-      //   style={{ backgroundImage: `url(${honeycomb})` }}
-    >
+    <div className="h-screen flex items-center justify-center px-4 bg-yellow-200">
       <div className="max-w-2xl w-full p-10 text-center">
-        <img src={logo} className="mb-[200px]"></img>
+        <img src={logo} className="mb-[160px]"></img>
         <div className="flex flex-col gap-10 md:flex-row md:justify-center md:gap-12">
           <MainButton
             label="방 만들기"

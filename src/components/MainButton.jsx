@@ -8,7 +8,10 @@ const variants = {
 export default function MainButton({ label, onClick, variant = "primary" }) {
   const style = variants[variant];
   return (
-    <button onClick={onClick} className={`${style.base} ${style.active}`}>
+    <button
+      onClick={onClick}
+      className={`py-5 px-10 border-2 border-blue-400 rounded-2xl hover:bg-white hover:text-black ${style.base} ${style.active} font-jua`}
+    >
       {label}
     </button>
   );
