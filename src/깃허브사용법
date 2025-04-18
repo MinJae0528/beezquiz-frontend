@@ -1,0 +1,2 @@
+1. git branch로 브랜치 확인하기
+2. git add . -> git commit -m "설명~" -> git push

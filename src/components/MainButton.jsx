@@ -1,6 +1,7 @@
 const variants = {
   primary: {
-    base: "bg-yellow-700 text-white",
+    base: "bg-yellow-700 text-white border-blue-400",
+    hover: " hover:bg-white hover:text-black",
     active: "active:bg-yellow-400",
   },
 };
@@ -10,7 +11,7 @@ export default function MainButton({ label, onClick, variant = "primary" }) {
   return (
     <button
       onClick={onClick}
-      className={`py-5 px-10 border-2 border-blue-400 rounded-2xl hover:bg-white hover:text-black ${style.base} ${style.active} font-jua`}
+      className={`font-jua py-5 px-10 border-2 rounded-2xl ${style.base} ${style.hover} ${style.active} `}
     >
       {label}
     </button>

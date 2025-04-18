@@ -1,25 +1,29 @@
+import { AnimatePresence } from "framer-motion";
+import JoinRoom from "./components/JoinRoom";
 import MainButton from "./components/MainButton";
 import logo from "./img/Logo.png";
+import { useState } from "react";
+import polygonImg1 from "./img/Polygon1.svg";
 
 export default function Home() {
+  const [isJoinRoomOpen, setIsJoinRoomOpen] = useState(false);
+
   const createRoom = () => {
-    alert("방을 생성하시겠습니까");
+    alert("방을 생성하시겠습니까?");
   };
 
   const joinRoom = () => {
-    alert("방에 참여하시겠습니까?");
+    setIsJoinRoomOpen(true);
   };
 
   return (
     <div className="h-screen flex items-center justify-center px-4 bg-yellow-200">
       <div className="max-w-2xl w-full p-10 text-center">
-        <img src={logo} className="mb-[160px]"></img>
+        <img src={logo} className="mb-[160px]" alt="logo"></img>
         <div className="flex flex-col gap-10 md:flex-row md:justify-center md:gap-12">
-          <MainButton
-            label="방 만들기"
-            onClick={createRoom}
-            variant="primary"
-          />
+          <MainButton label="방 만들기" onClick={createRoom} variant="primary">
+            <img src={polygonImg1} alt="btnimg" />
+          </MainButton>
           <MainButton
             label="방 참여하기"
             onClick={joinRoom}
@@ -27,6 +31,12 @@ export default function Home() {
           />
         </div>
       </div>
+      <AnimatePresence>
+        {/* 🔹 조건부로 JoinRoom 컴포넌트를 렌더링 */}
+        {isJoinRoomOpen && (
+          <JoinRoom key="join-room" onClose={() => setIsJoinRoomOpen(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -48,4 +58,10 @@ export default function Home() {
 
     // variant = "primary" : 버튼 속성에서 primary 속성을 사용
     //  -primary안에는 base라는 기본상태의 스타일과 active라는 버튼 활성화 상태의 스타일이 있음
+
+
+    // 참여하기 버튼을 클릭하면 JoinRoom 컴포넌트를 화면에 표시
+    // useState를 사용해서 상태를 추가했음
+    // isJoinRoomOpen이라는 상태를 만들어서 조건부 렌더링에 사용
+    // joinRoom 함수는 isJoinRoomOpen을 true로 바꿈
 */
