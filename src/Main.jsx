@@ -3,7 +3,7 @@ import JoinRoom from "./components/JoinRoom";
 import MainButton from "./components/MainButton";
 import logo from "./img/Logo.png";
 import { useState } from "react";
-import polygonImg1 from "./img/Polygon1.svg";
+// import polygonImg1 from "./img/Polygon1.svg";
 
 export default function Home() {
   const [isJoinRoomOpen, setIsJoinRoomOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Home() {
         <img src={logo} className="mb-[160px]" alt="logo"></img>
         <div className="flex flex-col gap-10 md:flex-row md:justify-center md:gap-12">
           <MainButton label="방 만들기" onClick={createRoom} variant="primary">
-            <img src={polygonImg1} alt="btnimg" />
+            {/* <img src={polygonImg1} alt="btnimg" /> */}
           </MainButton>
           <MainButton
             label="방 참여하기"
