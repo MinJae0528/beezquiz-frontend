@@ -40,7 +40,7 @@ export default function JoinRoom({ onClose }) {
         transition={{ duration: 0.4, ease: "easeOut" }} //  부드럽게 easeOut으로 0.4초 동안 실행
         className="relative bg-white rounded-xl px-[80px] pt-[120px] pb-[100px] shadow-lg h-[500px] w-[500px] z-10"
       >
-        <h1 className="font-jua mb-[110px] text-4xl">Ready For Join In..</h1>
+        <h1 className="font-jua mb-[110px] text-4xl">Enter the Code!</h1>
         <form>
           <div className="mb-[20px]">
             <label htmlFor="code" className="font-jua text-lg mr-3">

@@ -2,8 +2,10 @@ import { AnimatePresence } from "framer-motion";
 import JoinRoom from "./components/JoinRoom";
 import MainButton from "./components/MainButton";
 import logo from "./img/Logo.png";
+import MainBg from "./img/MainBg.png";
 import { useState } from "react";
-// import polygonImg1 from "./img/Polygon1.svg";
+import polygonImg1 from "./img/Polygon1.png";
+import polygonImg2 from "./img/Polygon2.png";
 
 export default function Home() {
   const [isJoinRoomOpen, setIsJoinRoomOpen] = useState(false);
@@ -17,17 +19,24 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center px-4 bg-yellow-200">
+    <div
+      className="h-screen flex items-center justify-center px-4"
+      style={{ backgroundImage: `url(${MainBg})` }}
+    >
       <div className="max-w-2xl w-full p-10 text-center">
         <img src={logo} className="mb-[160px]" alt="logo"></img>
-        <div className="flex flex-col gap-10 md:flex-row md:justify-center md:gap-12">
-          <MainButton label="방 만들기" onClick={createRoom} variant="primary">
-            {/* <img src={polygonImg1} alt="btnimg" /> */}
-          </MainButton>
+        <div className="flex flex-col md:flex-row md:justify-center md:gap-[130px]">
+          <MainButton
+            label="방 만들기"
+            onClick={createRoom}
+            variant="primary"
+            backgroundImage={polygonImg1}
+          />
           <MainButton
             label="방 참여하기"
             onClick={joinRoom}
             variant="primary"
+            backgroundImage={polygonImg2}
           />
         </div>
       </div>
