@@ -6,12 +6,15 @@ import MainBg from "./img/MainBg.png";
 import { useState } from "react";
 import polygonImg1 from "./img/Polygon1.png";
 import polygonImg2 from "./img/Polygon2.png";
+import { useNavigate } from "react-router-dom";
 
 export default function QuizMain() {
   const [isJoinRoomOpen, setIsJoinRoomOpen] = useState(false);
+  const navigate = useNavigate();
 
   const createRoom = () => {
-    alert("방을 생성하시겠습니까?");
+    //alert("방을 생성하시겠습니까?");
+    navigate("/create-quiz")
   };
 
   const joinRoom = () => {
