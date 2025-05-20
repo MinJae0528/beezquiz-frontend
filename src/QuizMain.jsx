@@ -1,8 +1,8 @@
 import { AnimatePresence } from "framer-motion";
-import JoinRoom from "./components/JoinRoom";
+import JoinRoom from "./screens/JoinRoom.jsx";
 import MainButton from "./components/MainButton";
 import logo from "./img/Logo.png";
-import MainBg from "./img/MainBg.png";
+import MainBg from "./img/MainBg2.png";
 import { useState } from "react";
 import polygonImg1 from "./img/Polygon1.png";
 import polygonImg2 from "./img/Polygon2.png";

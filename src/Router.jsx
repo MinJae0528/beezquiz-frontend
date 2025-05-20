@@ -2,8 +2,7 @@
 
 import { Routes, Route } from "react-router-dom";
 import Main from "./Main.jsx";
-import QuizMain from "./QuizMain.jsx";
-import QuizMainPage from "./QuizMainPage.jsx";
+import QuizMainPage from "./pages/QuizMainPage.jsx";
 
 export default function AppRouter() {
   return (

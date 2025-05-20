@@ -1,3 +1,9 @@
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+} */
+
 .App {
   text-align: center;
 }
@@ -35,4 +41,33 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.typeit-cursor {
+  border-right: 2px solid #000; /* 커서의 두께와 색 */
+  animation: blink 1s step-end infinite; /* 깜빡이는 애니메이션 */
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes flow {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-flow-x {
+  animation: flow 30s linear infinite;
+}
+
+html,
+body {
+  overflow-x: hidden;
 }
