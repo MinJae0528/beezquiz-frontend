@@ -10,6 +10,13 @@
 3. git commit -m "~설명~"
 4. git push
 
+< 특정 파일만 커밋하기 >
+
+1. git branch : 브랜치 확인.
+2. git add 파일이름(README.md, Main.jsx ~~)
+3. git commit -m "~설명~"
+4. git push
+
 < 새로운 브랜치 만들기 >
 
 1. git checkout -b '브랜치 이름'
