@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       fontFamily: {
         jua: ['"Jua"', "sans-serif"],
+        nunito: ["Nunito", "sans-serif"],
+        Slab: ["Roboto Slab", "serif"],
+        NotoSansKR: ["Noto Sans KR", "sans-serif"],
       },
     },
   },

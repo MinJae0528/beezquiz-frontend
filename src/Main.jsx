@@ -1,11 +1,9 @@
-import HomePage from "./HomePage";
-import QuizMain from "./QuizMain";
+import HomePage from "./pages/HomePage.jsx";
 
 export default function Main() {
   return (
     <>
-      {/* <HomePage /> */}
-      <QuizMain />
+      <HomePage />
     </>
   );
 }

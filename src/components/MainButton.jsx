@@ -1,4 +1,4 @@
-import polygonImg1 from "../img/Polygon1.png";
+import polygonImg1 from "../assets/img/Polygon1.png";
 
 const variants = {
   primary: {
@@ -18,7 +18,7 @@ export default function MainButton({
   return (
     <button
       onClick={onClick}
-      className={`font-jua text-xl py-5 px-10 w-[300px] h-[180px] ${style.base} ${style.hover} ${style.active} transform transition-all duration-200 ease-in-out hover:scale-105 `}
+      className={`font-NotoSansKR text-xl py-5 px-10 w-[300px] h-[180px] ${style.base} ${style.hover} ${style.active} transform transition-all duration-200 ease-in-out hover:scale-105 `}
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "contain",
