@@ -1,9 +1,12 @@
-import JoinRoomBtn from "../components/JoinRoomBtn.jsx";
-import { useEffect, useRef } from "react";
+import JoinRoomBtn from "./JoinRoomBtn";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import { motion } from "framer-motion";
 
 export default function JoinRoom({ onClose }) {
   const modalRef = useRef(); // 모달 내부를 참조하기 위한 ref
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 바깥 클릭 감지하는 이벤트 핸들러
@@ -19,6 +22,12 @@ export default function JoinRoom({ onClose }) {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [onClose]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!code.trim()) return;        // 빈 입력 방지
+    navigate(`/room/${code.trim()}`); // 대기실 페이지로 이동
+  };
 
   return (
     <motion.div
@@ -40,16 +49,19 @@ export default function JoinRoom({ onClose }) {
         transition={{ duration: 0.4, ease: "easeOut" }} //  부드럽게 easeOut으로 0.4초 동안 실행
         className="relative bg-white rounded-xl px-[80px] pt-[120px] pb-[100px] shadow-lg h-[500px] w-[500px] z-10"
       >
-        <h1 className="font-nunito mb-[110px] text-4xl">Enter the Code!</h1>
-        <form>
+        <h1 className="font-jua mb-[110px] text-4xl">Enter the Code!</h1>
+        <form onSubmit={handleSubmit}>
           <div className="mb-[20px]">
-            <label htmlFor="code" className="font-nunito text-lg mr-3">
+            <label htmlFor="code" className="font-jua text-lg mr-3">
               방 코드 :
             </label>
             <input
+              id="code"
+              value={code}
               type="text"
               autoComplete="off"
               required
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
               className="mr-5 border-b-2 border-black w-58 h-[35px]"
             />
           </div>

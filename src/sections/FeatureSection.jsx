@@ -1,8 +1,8 @@
 import FeatureBox from "../components/FeatureBox";
-import coin from "../img/CurrencyCircleDollar.svg";
-import translateicon from "../img/Translate.svg";
-import shieldicon from "../img/ShieldCheck.svg";
-import ranking from "../img/Ranking.svg";
+import coin from "../assets/img/CurrencyCircleDollar.svg";
+import translateicon from "../assets/img/Translate.svg";
+import shieldicon from "../assets/img/ShieldCheck.svg";
+import ranking from "../assets/img/Ranking.svg";
 
 export default function FeatureSection() {
   return (

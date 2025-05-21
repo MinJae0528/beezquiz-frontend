@@ -1,17 +1,20 @@
 import { AnimatePresence } from "framer-motion";
-import JoinRoom from "./screens/JoinRoom.jsx";
-import MainButton from "./components/MainButton";
-import logo from "./img/Logo.png";
-import MainBg from "./img/MainBg2.png";
+import JoinRoom from "./JoinRoom.jsx";
+import MainButton from "../components/MainButton.jsx";
+import logo from "../assets/img/Logo.png";
+import MainBg from "../assets/img/MainBg2.png";
 import { useState } from "react";
-import polygonImg1 from "./img/Polygon1.png";
-import polygonImg2 from "./img/Polygon2.png";
+import polygonImg1 from "../assets/img/Polygon1.png";
+import polygonImg2 from "../assets/img/Polygon2.png";
+import { useNavigate } from "react-router-dom";
 
 export default function QuizMain() {
   const [isJoinRoomOpen, setIsJoinRoomOpen] = useState(false);
+  const navigate = useNavigate();
 
   const createRoom = () => {
-    alert("방을 생성하시겠습니까?");
+    // alert("방을 생성하시겠습니까?");
+    navigate("/createQuiz")
   };
 
   const joinRoom = () => {

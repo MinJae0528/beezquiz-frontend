@@ -1,10 +1,10 @@
-import TailWindLogo from "../img/Tailwind_CSS_logo.svg";
-import reacticon from "../img/reactlogo.png";
-import figmaicon from "../img/figmalogo2.png";
-import unsplashicon2 from "../img/unsplashlogo.png";
-import githubicon from "../img/github-icon-1.svg";
-import githubicon2 from "../img/github-2.svg";
-import azure from "../img/azureicon.png";
+import TailWindLogo from "../assets/img/Tailwind_CSS_logo.svg";
+import reacticon from "../assets/img/reactlogo.png";
+import figmaicon from "../assets/img/figmalogo2.png";
+import unsplashicon2 from "../assets/img/unsplashlogo.png";
+import githubicon from "../assets/img/github-icon-1.svg";
+import githubicon2 from "../assets/img/github-2.svg";
+import azure from "../assets/img/azureicon.png";
 
 export default function TechSection() {
   return (

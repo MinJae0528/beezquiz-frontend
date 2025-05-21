@@ -1,4 +1,4 @@
-import logo from "../img/BeeiconR.svg";
+import logo from "../assets/img/BeeiconR.svg";
 
 export default function FooterSection() {
   return (

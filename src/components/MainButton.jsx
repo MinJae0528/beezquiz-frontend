@@ -1,4 +1,4 @@
-import polygonImg1 from "../img/Polygon1.png";
+import polygonImg1 from "../assets/img/Polygon1.png";
 
 const variants = {
   primary: {

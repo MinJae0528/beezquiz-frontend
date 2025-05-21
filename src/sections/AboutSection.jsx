@@ -1,4 +1,4 @@
-import backgroundimgg from "../img/aboutBg.svg";
+import backgroundimgg from "../assets/img/aboutBg.svg";
 
 export default function AboutSection() {
   return (

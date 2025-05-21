@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import TypeIt from "typeit-react";
-import "../App.css";
-import heroimg from "../img/heroimg.svg";
+import "../styles/App.css";
+import heroimg from "../assets/img/heroimg.svg";
 
 export default function HeroSection() {
   return (

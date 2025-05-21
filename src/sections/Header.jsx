@@ -1,4 +1,4 @@
-import beeicon from "../img/BeeiconR.svg";
+import beeicon from "../assets/img/BeeiconR.svg";
 
 export default function Header() {
   return (
