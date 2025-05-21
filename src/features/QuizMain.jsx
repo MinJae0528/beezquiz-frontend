@@ -6,6 +6,7 @@ import MainBg from "../assets/img/MainBg2.png";
 import { useState } from "react";
 import polygonImg1 from "../assets/img/Polygon1.png";
 import polygonImg2 from "../assets/img/Polygon2.png";
+
 import { useNavigate } from "react-router-dom";
 
 export default function QuizMain() {
@@ -23,9 +24,10 @@ export default function QuizMain() {
 
   return (
     <div
-      className="h-screen flex items-center justify-center px-4"
-      style={{ backgroundImage: `url(${MainBg})` }}
-    >
+  className="h-screen flex items-center justify-center px-4 bg-cover bg-center bg-no-repeat"
+  style={{ backgroundImage: `url(${MainBg})` }}
+>
+
       <div className="max-w-2xl w-full p-10 text-center">
         <img src={logo} className="mb-[160px]" alt="logo"></img>
         <div className="flex flex-col md:flex-row md:justify-center md:gap-[130px]">

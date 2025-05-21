@@ -5,7 +5,7 @@ html, body {
     background-image: url('../assets/img/quizBackground.svg');
     background-repeat: repeat;
     background-position: center top;
-    background-size: auto;
+    background-size: cover;
     background-attachment: fixed;
   }
   
@@ -32,13 +32,13 @@ html, body {
     background-size: contain;
     width: 80vw;
     max-width: 800px;
-    aspect-ratio: 1.4 / 1;
-    margin: 20px auto;
+    aspect-ratio: 1.5 / 1;
+    margin:auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding-bottom: 4.5%;
     box-sizing: border-box;
   }
   
