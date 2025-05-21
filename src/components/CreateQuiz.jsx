@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../style/CreateQuiz.css';
-import honeyImage from '../img/Honey.svg';
-import logoImage from '../img/BeezQuiz.svg';
+import '../styles/CreateQuiz.css';
+import honeyImage from '../assets/img/Honey.svg';
+import logoImage from '../assets/img/BeezQuiz.svg';
 
 const CreateQuiz = () => {
   const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
