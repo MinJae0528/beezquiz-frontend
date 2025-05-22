@@ -5,6 +5,7 @@ import Main from "../Main.jsx";
 import QuizMainPage from "../pages/QuizMainPage.jsx";
 import CreateQuizPage from "../pages/CreateQuizPage.jsx";
 import WaitingRoomPage from "../pages/WaitingRoomPage.jsx";
+import HostWaitingPage from "../pages/HostWaitingPage.jsx";
 
 export default function AppRouter() {
   return (
@@ -13,6 +14,7 @@ export default function AppRouter() {
       <Route path="/quiz" element={<QuizMainPage />} />
       <Route path="/createQuiz" element={<CreateQuizPage />} />
       <Route path="/room/:roomId" element={<WaitingRoomPage />} />
+      <Route path="/host/room/:roomId" element={<HostWaitingPage />} />
     </Routes>
   );
 }
