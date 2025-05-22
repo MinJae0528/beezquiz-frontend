@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/CreateQuiz.css";
 import honeyImage from "../assets/img/Honey.svg";
 import logoImage from "../assets/img/BeezQuiz.svg";
 
 const CreateQuiz = () => {
   const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
+  const navigate = useNavigate(); // ✅ 라우터 이동 훅
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { question: "", answer: "" }]);
@@ -39,8 +41,10 @@ const CreateQuiz = () => {
       }
 
       const data = await response.json();
+      const { roomCode } = data;
+
       console.log("✅ 방 생성 성공:", data);
-      alert(`방 코드: ${data.roomCode}`);
+      navigate(`/host/room/${roomCode}`); // ✅ 방 코드로 대기실 이동
     } catch (error) {
       console.error("❌ 네트워크 오류:", error);
       alert("방 생성 중 네트워크 오류 발생");
@@ -61,7 +65,7 @@ const CreateQuiz = () => {
             <div className="form-group">
               <label>{`문제 ${index + 1}`}</label>
               <textarea
-                value={q.question}
+                value={q.question || ""}
                 onChange={(e) =>
                   handleChange(index, "question", e.target.value)
                 }
@@ -72,7 +76,7 @@ const CreateQuiz = () => {
             <div className="form-group">
               <label>정답</label>
               <input
-                value={q.answer}
+                value={q.answer || ""}
                 onChange={(e) => handleChange(index, "answer", e.target.value)}
                 className="answer-input"
                 placeholder="정답을 입력하세요"
