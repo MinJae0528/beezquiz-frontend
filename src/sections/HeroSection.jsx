@@ -1,12 +1,31 @@
 import { Link } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 import TypeIt from "typeit-react";
 import "../styles/App.css";
 import heroimg from "../assets/img/heroimg.svg";
 
 export default function HeroSection() {
+  const handleScrollLinkClick = () => {
+    console.log("눌렀어요!");
+    const targetElement = document.getElementById("feature");
+
+    if (targetElement) {
+      console.log("Target offsetTop:", targetElement.offsetTop);
+      // 스크롤 이동
+      targetElement.scrollIntoView({
+        behavior: "smooth", // 부드러운 스크롤
+        block: "start", // 요소의 상단에 맞추어 스크롤
+      });
+      console.log(targetElement);
+      console.log(`Scrolling to: ${targetElement.offsetTop}`);
+    } else {
+      console.log("Target element not found");
+    }
+  };
+
   return (
-    <section>
-      <div className="flex justify-between w-full min-h-[60vh] py-[90px] mt-[60px] pt-[160px]">
+    <section id="hero">
+      <div className="flex justify-between w-full min-h-[100vh] py-[90px] mt-[60px] pt-[160px]">
         {/* 첫 번째 div: 텍스트 내용 영역 */}
         <div className="flex flex-col items-start pl-[5%] md:pl-[120px] ">
           <TypeIt
@@ -39,17 +58,17 @@ export default function HeroSection() {
             >
               퀴즈 시작하기
             </Link>
-            <a
-              href="/getting-started"
-              className="px-6 py-3 border-4 bg-white border-yellow-400 text-yellow-700 rounded-lg hover:bg-blue-50"
+            <button
+              className="px-6 py-3 border-4 bg-white border-yellow-400 text-yellow-700 rounded-lg hover:bg-blue-50 cursor-pointer"
+              onClick={handleScrollLinkClick}
             >
               비즈퀴즈는?
-            </a>
+            </button>
           </div>
         </div>
 
         {/* 두 번째 div: 이미지 영역 */}
-        <div className="">
+        <div>
           <img
             src={heroimg}
             alt="herobg"

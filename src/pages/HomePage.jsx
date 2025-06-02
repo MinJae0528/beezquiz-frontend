@@ -7,7 +7,7 @@ import TechSection from "../sections/TechSection.jsx";
 
 export default function HomePage() {
   return (
-    <div className="min-h-[60vh]">
+    <div className="min-h-[100vh] home-background">
       <Header />
       <main>
         <HeroSection />

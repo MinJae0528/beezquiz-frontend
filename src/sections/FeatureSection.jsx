@@ -6,7 +6,7 @@ import ranking from "../assets/img/Ranking.svg";
 
 export default function FeatureSection() {
   return (
-    <section className="pb-[40px] min-h-[60vh] bg-gray-100">
+    <section id="feature" className="pb-[40px] min-h-[60vh] bg-gray-100">
       {/* 고정 높이 제거하고 min-height 설정 */}
       <header className="bg-[#343330] h-[50px]"></header>
       <div className="max-w-6xl mx-auto px-6 text-center">

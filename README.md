@@ -25,3 +25,7 @@
 4. git commit -m "~설명~"
 5. git push orgin '브랜치 이름' : 첫 푸쉬 때만 이렇게 작성
 6. git push : 두번째부터는 git push만
+
+< react-scroll 설치 >
+
+1. npm install react-scroll

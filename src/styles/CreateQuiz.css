@@ -1,93 +1,99 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-image: url('../assets/img/quizBackground.svg');
-    background-repeat: repeat;
-    background-position: center top;
-    background-size: cover;
-    background-attachment: fixed;
-  }
-  
-  .quiz-container {
-    width: 100vw;
-    min-height: 100vh;
-    position: relative;
-    font-family: 'Arial', sans-serif;
-    padding-bottom: 40px;
-    overflow: auto;
-  }
-  
-  .logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 120px;
-  }
-  
-  .quiz-box {
-    background-image: url('../assets/img/Honey.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    width: 80vw;
-    max-width: 800px;
-    aspect-ratio: 1.5 / 1;
-    margin:auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 4.5%;
-    box-sizing: border-box;
-  }
-  
-  .quiz-inputs {
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 4px;
-    text-align: left;
-  }
-  
-  .question-input,
-  .answer-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    font-size: 14px;
-  }
-  
-  .quiz-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 30%;
-    margin: 32px auto;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-    background-color: #a86800;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-image: url("../assets/img/quizBackground.svg");
+  background-repeat: repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.quiz-container {
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  font-family: "Arial", sans-serif;
+  padding-bottom: 40px;
+  overflow: auto;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+}
+
+.quiz-box {
+  background-image: url("../assets/img/Honey.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 80vw;
+  max-width: 800px;
+  aspect-ratio: 1.5 / 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4.5%;
+  box-sizing: border-box;
+}
+
+.quiz-inputs {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.question-input,
+.answer-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.quiz-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 30%;
+  margin: 32px auto;
+}
+
+.add-question-btn,
+.start-btn {
+  background-color: #a86800;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.home-background {
+  background-color: white !important; /* 배경 색상을 흰색으로 설정 */
+  background-image: none !important; /* 배경 이미지를 제거 */
+  min-height: 100vh; /* 페이지 전체에 배경이 적용되도록 높이 설정 */
+}

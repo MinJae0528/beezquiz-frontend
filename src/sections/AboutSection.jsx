@@ -1,8 +1,8 @@
-import backgroundimgg from "../assets/img/aboutBg.svg";
+import backgroundimgg from "../assets/img/aboutbgbg.svg";
 
 export default function AboutSection() {
   return (
-    <section className="relative min-h-[600px] h-[700px] mt-[80px] border-t-2">
+    <section id="about" className="relative min-h-[700px] mt-[80px] border-t-2">
       <div className="relative z-10 p-10 text-center text-black bg-gray-50  py-[60px]">
         <h1 className="font-nunito font-semibold text-3xl">About Us.</h1>
         <p className="font-NotoSansKR text-md pt-[5%]">

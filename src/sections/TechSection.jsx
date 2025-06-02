@@ -8,7 +8,7 @@ import azure from "../assets/img/azureicon.png";
 
 export default function TechSection() {
   return (
-    <section className="relative w-full h-[40px] bg-gray-200">
+    <section id="tech" className="relative w-full h-[40px] bg-gray-200">
       <div className="absolute inset-0 flex items-center justify-center gap-[48px] space-x flowing-icon animate-flow-x">
         <div className="">
           <img src={TailWindLogo} alt="twlogo" className="w-[136px]"></img>
