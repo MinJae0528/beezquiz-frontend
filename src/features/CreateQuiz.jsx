@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/CreateQuiz.css";
-import honeyImage from "../assets/img/Honey.svg";
-import logoImage from "../assets/img/BeezQuiz.svg";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/CreateQuiz.css';
+import honeyImage from '../assets/img/Honey.svg';
+import logoImage from '../assets/img/BeezQuiz.svg';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const CreateQuiz = () => {
-  const [questions, setQuestions] = useState([{ question: "", answer: "" }]);
-  const navigate = useNavigate(); // ✅ 라우터 이동 훅
+  const [questions, setQuestions] = useState([{ question: '', answer: '' }]);
+  const navigate = useNavigate();
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { question: "", answer: "" }]);
+    setQuestions([...questions, { question: '', answer: '' }]);
   };
 
   const handleChange = (index, field, value) => {
@@ -19,37 +21,55 @@ const CreateQuiz = () => {
   };
 
   const handleStartQuiz = async () => {
-    console.log("퀴즈 시작:", questions);
+  if (!API_BASE_URL) {
+    alert("❌ API 주소가 설정되지 않았습니다.");
+    return;
+  }
 
-    try {
-      const response = await fetch(
-        "https://beezquiz-f7gpc0fefpfzaph6.koreasouth-01.azurewebsites.net/rooms/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ questions }),
-        }
-      );
+  try {
+    // 1. 방 생성
+    const roomRes = await fetch(`${API_BASE_URL}/rooms/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ questions: [] }) // 방 생성 시 빈 문제 배열
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("❌ 서버 응답 오류:", errorData);
-        alert("방 생성 실패: " + (errorData.message || "서버 오류"));
-        return;
-      }
-
-      const data = await response.json();
-      const { roomCode } = data;
-
-      console.log("✅ 방 생성 성공:", data);
-      navigate(`/host/room/${roomCode}`); // ✅ 방 코드로 대기실 이동
-    } catch (error) {
-      console.error("❌ 네트워크 오류:", error);
-      alert("방 생성 중 네트워크 오류 발생");
+    if (!roomRes.ok) {
+      const err = await roomRes.json();
+      alert("❌ 방 생성 실패: " + (err.message || "서버 오류"));
+      return;
     }
-  };
+
+    const { roomCode } = await roomRes.json();
+
+    // 2. 문제 저장 - 전송 전 로그 확인
+    const formattedQuestions = questions.map((q) => ({
+      text: q.question,
+      correctAnswer: q.answer
+    }));
+
+    console.log("✅ 서버에 전송할 문제 리스트:", formattedQuestions);
+
+    const saveRes = await fetch(`${API_BASE_URL}/room/${roomCode}/questions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ questions: formattedQuestions })
+    });
+
+    if (!saveRes.ok) {
+      const err = await saveRes.json();
+      alert("❌ 문제 저장 실패: " + (err.message || "서버 오류"));
+      return;
+    }
+
+    // 3. 성공 시 페이지 이동
+    navigate(`/host/room/${roomCode}`);
+  } catch (error) {
+    console.error("❌ 네트워크 오류:", error);
+    alert("퀴즈 시작 중 네트워크 오류가 발생했습니다.");
+  }
+};
+
 
   return (
     <div className="quiz-container">
@@ -65,10 +85,8 @@ const CreateQuiz = () => {
             <div className="form-group">
               <label>{`문제 ${index + 1}`}</label>
               <textarea
-                value={q.question || ""}
-                onChange={(e) =>
-                  handleChange(index, "question", e.target.value)
-                }
+                value={q.question}
+                onChange={(e) => handleChange(index, 'question', e.target.value)}
                 className="question-input"
                 placeholder="문제를 입력하세요"
               />
@@ -76,8 +94,8 @@ const CreateQuiz = () => {
             <div className="form-group">
               <label>정답</label>
               <input
-                value={q.answer || ""}
-                onChange={(e) => handleChange(index, "answer", e.target.value)}
+                value={q.answer}
+                onChange={(e) => handleChange(index, 'answer', e.target.value)}
                 className="answer-input"
                 placeholder="정답을 입력하세요"
               />

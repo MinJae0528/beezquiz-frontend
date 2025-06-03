@@ -24,7 +24,7 @@ export default function HostWaitingRoom() {
 
   const handleStart = () => {
     socket.emit("start-quiz", roomId);
-    navigate(`/quiz/${roomId}`); // 퀴즈 화면으로 이동
+    navigate(`/host/quiz/${roomId}`); // 퀴즈 화면으로 이동
   };
 
   return (

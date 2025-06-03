@@ -18,7 +18,7 @@ export default function WaitingRoom() {
     });
 
     socket.on("start-quiz", () => {
-      navigate(`/quiz/${roomId}`);
+      navigate(`/students/quiz/${roomId}`);
     });
 
     return () => {
