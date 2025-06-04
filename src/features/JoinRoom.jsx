@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import socket from "../socket"; // ✅ socket import 추가
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -30,15 +31,24 @@ export default function JoinRoom({ onClose }) {
     if (!trimmedCode || !trimmedNickname) return;
 
     try {
+      // 1. REST API로 방 참가 요청
       await axios.post(`${API_BASE_URL}/rooms/join`, {
         roomCode: trimmedCode,
         nickname: trimmedNickname,
         role: "student"
       });
 
-      // ✅ 닉네임 로컬 스토리지에 저장
+      // 2. 로컬에 닉네임 저장
       localStorage.setItem("nickname", trimmedNickname);
 
+      // 3. ✅ 소켓으로도 nickname 전달 (서버에서 socket.id <-> nickname 매핑용)
+      socket.emit("join-room", {
+        roomCode: trimmedCode,
+        role: "student",
+        nickname: trimmedNickname,
+      });
+
+      // 4. 이동
       navigate(`/room/${trimmedCode}`);
     } catch (error) {
       alert("❌ 해당 방이 존재하지 않거나 참가할 수 없습니다.");

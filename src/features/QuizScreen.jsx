@@ -16,16 +16,17 @@ export default function StudentQuizScreen() {
   const answersRef = useRef([]);
 
   useEffect(() => {
-    socket.emit("join-room", { roomCode: roomId, role: "student" });
 
+    // 문제 불러오기
     fetch(`${API_BASE}/room/${roomId}/questions`)
       .then((res) => res.json())
       .then((data) => {
         const questions = data.questions || [];
         setQuizList(questions);
-        setHasSubmitted(new Array(questions.length).fill(false)); // 초기화
+        setHasSubmitted(new Array(questions.length).fill(false));
       });
 
+    // 소켓 이벤트 등록
     socket.on("start-quiz", () => {
       setCurrentIndex(0);
     });
@@ -58,6 +59,7 @@ export default function StudentQuizScreen() {
         });
     });
 
+    // 이벤트 정리
     return () => {
       socket.off("start-quiz");
       socket.off("next-question");
