@@ -81,8 +81,9 @@ export default function ResultChart({ participants, totalQuestions }) {
   };
 
   return (
-    <div className="w-full h-[400px] px-4">
-      <Bar data={data} options={options} />
-    </div>
-  );
+  <div className="w-full h-[300px] md:h-[400px] px-2 md:px-4">
+    <Bar data={data} options={options} />
+  </div>
+);
+
 }

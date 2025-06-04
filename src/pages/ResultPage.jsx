@@ -7,35 +7,38 @@ import honeyImage from "../assets/img/Honey.svg";
 import backgroundImage from "../assets/img/quizBackground.svg";
 
 export default function ResultPage() {
-  const { roomCode } = useParams();
+  const { roomId } = useParams();
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-  const fetchSummary = async () => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/result/summary/${roomCode}`
-      );
+    const fetchSummary = async () => {
+      try {
+        // ✅ 1초 지연 후 요청
+        console.log("⏳ 결과 요청 1초 지연 중...");
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const text = await res.text(); // 응답을 문자열로 먼저 확인
-      console.log("📦 백엔드 응답 원문:", text);
+        const res = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/result/summary/${roomId}`
+        );
 
-      if (!res.ok) {
-        console.error("❌ 서버 응답 실패:", res.status);
-        return;
+        const text = await res.text();
+        console.log("📦 백엔드 응답 원문:", text);
+
+        if (!res.ok) {
+          console.error("❌ 서버 응답 실패:", res.status);
+          return;
+        }
+
+        const data = JSON.parse(text);
+        console.log("✅ 파싱된 JSON:", data);
+        setSummary(data);
+      } catch (err) {
+        console.error("❌ 결과 요약 불러오기 실패:", err);
       }
+    };
 
-      const data = JSON.parse(text); // 수동으로 JSON 파싱
-      console.log("✅ 파싱된 JSON:", data);
-      setSummary(data);
-    } catch (err) {
-      console.error("❌ 결과 요약 불러오기 실패:", err);
-    }
-  };
-
-  fetchSummary();
-}, [roomCode]);
-
+    fetchSummary();
+  }, [roomId]);
 
   if (!summary) {
     return (

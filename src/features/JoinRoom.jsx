@@ -35,6 +35,10 @@ export default function JoinRoom({ onClose }) {
         nickname: trimmedNickname,
         role: "student"
       });
+
+      // ✅ 닉네임 로컬 스토리지에 저장
+      localStorage.setItem("nickname", trimmedNickname);
+
       navigate(`/room/${trimmedCode}`);
     } catch (error) {
       alert("❌ 해당 방이 존재하지 않거나 참가할 수 없습니다.");

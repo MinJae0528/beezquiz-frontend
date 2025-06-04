@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import socket from "../socket";
 import logoImage from "../assets/img/BeezQuiz.svg";
 import bgbgbg from "../assets/img/quizbgbgbg.svg";
+
+const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
 export default function StudentQuizScreen() {
   const { roomId } = useParams();
   const [quizList, setQuizList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answer, setAnswer] = useState("");
-  const [submittedAnswers, setSubmittedAnswers] = useState([]);
   const navigate = useNavigate();
-  const API_BASE = process.env.REACT_APP_API_BASE_URL;
+
+  const answersRef = useRef([]); // ✅ answers 상태 useRef로 대체
 
   useEffect(() => {
     socket.emit("join-room", { roomCode: roomId, role: "student" });
@@ -30,6 +32,7 @@ export default function StudentQuizScreen() {
     });
 
     socket.on("quiz-finished", () => {
+      // ✅ 퀴즈 종료 시 최신 answers 전송
       fetch(`${API_BASE}/result`, {
         method: "POST",
         headers: {
@@ -38,7 +41,7 @@ export default function StudentQuizScreen() {
         body: JSON.stringify({
           roomCode: roomId,
           nickname: localStorage.getItem("nickname") || "익명",
-          answers: submittedAnswers,
+          answers: answersRef.current,
           role: "student",
         }),
       })
@@ -57,22 +60,19 @@ export default function StudentQuizScreen() {
       socket.off("next-question");
       socket.off("quiz-finished");
     };
-  }, [roomId, submittedAnswers]);
+  }, [roomId, navigate]);
 
   const currentQuiz = quizList[currentIndex];
 
   const handleSubmit = () => {
     if (!answer.trim()) return;
 
+    // ✅ answersRef 업데이트
+    answersRef.current[currentIndex] = answer;
+
     socket.emit("submit-answer", {
       roomCode: roomId,
       questionIndex: currentIndex,
-    });
-
-    setSubmittedAnswers((prev) => {
-      const updated = [...prev];
-      updated[currentIndex] = answer;
-      return updated;
     });
 
     setAnswer("");
