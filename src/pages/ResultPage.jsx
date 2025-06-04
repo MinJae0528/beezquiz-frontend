@@ -1,9 +1,11 @@
+// src/pages/ResultPage.jsx
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ResultChart from "../features/ResultChart";
 
 import logoImage from "../assets/img/Logo.png";
-import honeyImage from "../assets/img/Honey.svg";
+import honeyImage from "../assets/img/quizbgbgbg.svg"; // 기존보다 적절한 칠판 배경
 import backgroundImage from "../assets/img/quizBackground.svg";
 
 export default function ResultPage() {
@@ -13,14 +15,7 @@ export default function ResultPage() {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        // ✅ 1초 지연 후 요청
-        console.log("⏳ 결과 요청 1초 지연 중...");
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/result/summary/${roomId}`
-        );
-
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/result/summary/${roomId}`);
         const text = await res.text();
         console.log("📦 백엔드 응답 원문:", text);
 
@@ -37,7 +32,9 @@ export default function ResultPage() {
       }
     };
 
-    fetchSummary();
+    // 500ms 지연 후 fetch 실행
+    const timer = setTimeout(fetchSummary, 500);
+    return () => clearTimeout(timer);
   }, [roomId]);
 
   if (!summary) {
@@ -60,22 +57,19 @@ export default function ResultPage() {
         <img src={logoImage} alt="BeezQuiz Logo" className="w-[240px]" />
       </div>
 
-      {/* 꿀 배경 결과 박스 */}
+      {/* 칠판 결과 박스 */}
       <div
-        className="relative mx-auto w-[850px] min-h-[460px] bg-no-repeat bg-center bg-contain px-12 py-12"
+        className="relative mx-auto w-[950px] min-h-[500px] bg-no-repeat bg-center bg-contain px-10 py-10"
         style={{ backgroundImage: `url(${honeyImage})` }}
       >
-        {/* 상단 통계 텍스트 */}
-        <div className="flex justify-between text-[#81491c] font-extrabold text-2xl mb-6">
+        {/* 통계 텍스트 */}
+        <div className="flex justify-between px-2 text-[#81491c] font-extrabold text-xl mb-6">
           <span>참여인원 : {participants.length}</span>
-          <span>평균 정답 갯수 : {averageScore.toFixed(1)}개</span>
+          <span>평균 정답 개수 : {averageScore.toFixed(1)}개</span>
         </div>
 
         {/* 차트 삽입 */}
-        <ResultChart
-          participants={participants}
-          totalQuestions={totalQuestions}
-        />
+        <ResultChart participants={participants} totalQuestions={totalQuestions} />
       </div>
     </div>
   );

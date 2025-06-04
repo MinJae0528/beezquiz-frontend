@@ -68,10 +68,10 @@ export default function HostQuizScreen() {
       </div>
 
       <div
-        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-20"
+        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-10"
         style={{ backgroundImage: `url(${bgbgbg})` }}
       >
-        <div className="w-[740px] h-[320px] text-3xl text-black text-center">
+        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
           {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
         </div>
       </div>
