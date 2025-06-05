@@ -4,6 +4,7 @@ import FeaturesSection from "../sections/FeatureSection.jsx";
 import Footer from "../sections/Footer.jsx";
 import AboutSection from "../sections/AboutSection.jsx";
 import TechSection from "../sections/TechSection.jsx";
+import "../styles/App.css";
 
 export default function HomePage() {
   return (
