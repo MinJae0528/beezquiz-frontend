@@ -1,59 +1,84 @@
 import JoinRoomBtn from "../components/JoinRoomBtn";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
+import socket from "../socket"; // ✅ socket import 추가
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default function JoinRoom({ onClose }) {
-  const modalRef = useRef(); // 모달 내부를 참조하기 위한 ref
+  const modalRef = useRef();
   const [code, setCode] = useState("");
+  const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 바깥 클릭 감지하는 이벤트 핸들러
     const handleOutsideClick = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        onClose(); // 모달 외부 클릭 시 닫기
+        onClose();
       }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [onClose]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!code.trim()) return;        // 빈 입력 방지
-    navigate(`/room/${code.trim()}`); // 대기실 페이지로 이동
+    const trimmedCode = code.trim().toUpperCase();
+    const trimmedNickname = nickname.trim();
+    if (!trimmedCode || !trimmedNickname) return;
+
+    try {
+      // 1. REST API로 방 참가 요청
+      await axios.post(`${API_BASE_URL}/rooms/join`, {
+        roomCode: trimmedCode,
+        nickname: trimmedNickname,
+        role: "student"
+      });
+
+      // 2. 로컬에 닉네임 저장
+      localStorage.setItem("nickname", trimmedNickname);
+
+      // 3. ✅ 소켓으로도 nickname 전달 (서버에서 socket.id <-> nickname 매핑용)
+      socket.emit("join-room", {
+        roomCode: trimmedCode,
+        role: "student",
+        nickname: trimmedNickname,
+      });
+
+      // 4. 이동
+      navigate(`/room/${trimmedCode}`);
+    } catch (error) {
+      alert("❌ 해당 방이 존재하지 않거나 참가할 수 없습니다.");
+      console.error("방 참가 실패:", error);
+    }
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0 }} //  처음에 투명하게 시작
-      animate={{ opacity: 1 }} //  점점 선명해지며 등장
-      exit={{ opacity: 0 }} //  사라질 때 다시 투명해지며 퇴장
-      transition={{ duration: 0.3 }} //  위의 애니메이션들에 0.3초 동안 적용
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
       className="fixed inset-0 z-50 flex justify-center items-center"
     >
-      {/* 어두운 배경 */}
       <div className="absolute inset-0 bg-black bg-opacity-50" />
 
-      {/* 모달 안쪽 콘텐츠 영역 (section)을 슬라이드 + fade-in/out 처리 */}
       <motion.section
-        ref={modalRef} // 클릭된 위치가 이 영역 안에 있는지 확인
-        initial={{ y: 100, opacity: 0 }} //  시작 위치: 아래 + 투명
-        animate={{ y: 0, opacity: 1 }} //  도착 위치: 제자리 + 불투명
-        exit={{ y: 100, opacity: 0 }} //  퇴장 시: 다시 아래로 내려가며 사라짐
-        transition={{ duration: 0.4, ease: "easeOut" }} //  부드럽게 easeOut으로 0.4초 동안 실행
-        className="relative bg-white rounded-xl px-[80px] pt-[120px] pb-[100px] shadow-lg h-[500px] w-[500px] z-10"
+        ref={modalRef}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="relative bg-white rounded-xl px-[80px] pt-[80px] pb-[100px] shadow-lg h-[550px] w-[500px] z-10"
       >
-        <h1 className="font-jua mb-[110px] text-4xl">방 코드를 입력하세요!</h1>
+        <h1 className="font-jua mb-[60px] text-4xl">방 참가</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-[20px]">
             <label htmlFor="code" className="font-jua text-lg mr-3">
-              방 코드 :
+              방 코드:
             </label>
             <input
               id="code"
@@ -62,6 +87,20 @@ export default function JoinRoom({ onClose }) {
               autoComplete="off"
               required
               onChange={(e) => setCode(e.target.value.toUpperCase())}
+              className="mr-5 border-b-2 border-black w-58 h-[35px]"
+            />
+          </div>
+          <div className="mb-[30px]">
+            <label htmlFor="nickname" className="font-jua text-lg mr-3">
+              닉네임:
+            </label>
+            <input
+              id="nickname"
+              value={nickname}
+              type="text"
+              autoComplete="off"
+              required
+              onChange={(e) => setNickname(e.target.value)}
               className="mr-5 border-b-2 border-black w-58 h-[35px]"
             />
           </div>

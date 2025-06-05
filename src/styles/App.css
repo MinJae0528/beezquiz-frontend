@@ -71,3 +71,12 @@ html,
 body {
   overflow-x: hidden;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.home-background {
+  background-color: #FFFDCD;
+  background-image: none;
+}
