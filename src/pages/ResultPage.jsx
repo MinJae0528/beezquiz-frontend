@@ -1,15 +1,16 @@
 // src/pages/ResultPage.jsx
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ResultChart from "../features/ResultChart";
 
 import logoImage from "../assets/img/Logo.png";
-import honeyImage from "../assets/img/quizbgbgbg.svg"; // 기존보다 적절한 칠판 배경
-import backgroundImage from "../assets/img/quizBackground.svg";
+import honeyImage from "../assets/img/quizbgbgbg.svg"; // 칠판 배경
+import backgroundImage from "../assets/img/quizBackground.svg"; // 전체 배경
 
 export default function ResultPage() {
   const { roomId } = useParams();
+  const navigate = useNavigate();
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
@@ -32,7 +33,6 @@ export default function ResultPage() {
       }
     };
 
-    // 500ms 지연 후 fetch 실행
     const timer = setTimeout(fetchSummary, 500);
     return () => clearTimeout(timer);
   }, [roomId]);
@@ -47,9 +47,13 @@ export default function ResultPage() {
 
   const { averageScore, totalQuestions, participants } = summary;
 
+  const handleExit = () => {
+    navigate("/");
+  };
+
   return (
     <div
-      className="min-h-screen w-screen bg-repeat"
+      className="flex flex-col min-h-screen w-screen bg-repeat"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* 상단 로고 */}
@@ -62,14 +66,22 @@ export default function ResultPage() {
         className="relative mx-auto w-[950px] min-h-[500px] bg-no-repeat bg-center bg-contain px-10 py-10"
         style={{ backgroundImage: `url(${honeyImage})` }}
       >
-        {/* 통계 텍스트 */}
         <div className="flex justify-between px-2 text-[#81491c] font-extrabold text-xl mb-6">
           <span>참여인원 : {participants.length}</span>
           <span>평균 정답 개수 : {averageScore.toFixed(1)}개</span>
         </div>
 
-        {/* 차트 삽입 */}
         <ResultChart participants={participants} totalQuestions={totalQuestions} />
+      </div>
+
+      {/* 나가기 버튼 - 칠판 밖 하단 */}
+      <div className="flex justify-center mt-8 mb-12">
+        <button
+          onClick={handleExit}
+          className="bg-yellow-400 px-6 py-3 rounded-xl text-lg font-semibold shadow-md hover:brightness-110 transition"
+        >
+          나가기
+        </button>
       </div>
     </div>
   );
