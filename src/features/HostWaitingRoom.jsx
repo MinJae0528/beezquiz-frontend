@@ -37,7 +37,7 @@ export default function HostWaitingRoom() {
       />
 
       {/* 입장 인원: 글씨 크기 3rem, 줄간격 2rem */}
-      <p className="absolute top-4 right-4 text-[3rem] leading-[2rem] font-extrabold text-[#81491c]">
+      <p className="absolute top-4 right-[3rem] text-[3rem] leading-[2rem] font-extrabold text-[#81491c]">
         입장 인원: {count}
       </p>
 

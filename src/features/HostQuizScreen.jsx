@@ -20,7 +20,6 @@ export default function HostQuizScreen() {
     fetch(`${API_BASE_URL}/room/${roomCode}/questions`)
       .then((res) => res.json())
       .then((data) => {
-        // ✅ 응답이 { questions: [...] } 형태일 경우
         if (Array.isArray(data.questions)) {
           setQuizList(data.questions);
         } else {
@@ -53,25 +52,31 @@ export default function HostQuizScreen() {
 
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-start pt-20">
-      <div className="absolute top-4 left-4">
-        <img src={logoImage} alt="Beez Quiz" className="w-24" />
-      </div>
+      {/* 로고 (크기만 20vh로) */}
+      <img
+        src={logoImage}
+        alt="Beez Quiz"
+        className="absolute top-4 left-4 h-[20vh] select-none pointer-events-none"
+      />
 
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-xl">
+      {/* 문제 번호 (폰트 크기만 조정) */}
+      <p className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/40 text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
         {quizList.length > 0
           ? `${currentIndex + 1} / ${quizList.length}`
-          : "문제를 불러오는 중..."}
-      </div>
+          : "문제 로딩 중..."}
+      </p>
 
-      <div className="absolute top-6 right-6 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-lg">
+      {/* 제출 인원 (폰트 크기만 조정) */}
+      <p className="absolute top-6 right-6 bg-black/40 text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
         제출: {submitCount}명
-      </div>
+      </p>
 
+      {/* 나머지 UI는 기존대로 유지 */}
       <div
-        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-10"
-        style={{ backgroundImage: `url(${bgbgbg})` }}
+        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-[15vh]"
+        style={{ backgroundImage: `url(${bgbgbg})`, backgroundSize: "cover", backgroundPosition: "center" }}
       >
-        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
+        <div className="w-[90%] h-[80%] text-3xl text-white text-left flex items-start justify-center pt-4">
           {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
         </div>
       </div>
