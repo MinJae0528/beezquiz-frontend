@@ -2,7 +2,7 @@ import beeicon from "../assets/img/BeeiconR.svg";
 
 export default function Header() {
   return (
-    <header className="flex items-center pt-[36px] px-[5%] h-[60px] gap-[32px]">
+    <header className="flex items-center pt-[15vh] px-[5%] h-[60px] gap-[32px]">
       <img src={beeicon} className="w-[64px]" alt="smallLogo" />
       <div>
         <p className="font-nunito font-thin text-3xl text-black">BeezQuiz.</p>

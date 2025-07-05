@@ -25,7 +25,7 @@ export default function HeroSection() {
 
   return (
     <section id="hero">
-      <div className="flex justify-between w-full min-h-[100vh] py-[90px] mt-[60px] pt-[160px]">
+      <div className="flex justify-between w-full min-h-[75vh] py-[90px] mt-[5vh] pt-[25vh]">
         {/* 첫 번째 div: 텍스트 내용 영역 */}
         <div className="flex flex-col items-start pl-[5%] md:pl-[120px] ">
           <TypeIt
