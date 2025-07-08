@@ -43,7 +43,7 @@ const CreateQuiz = () => {
 
       console.log("✅ 서버에 전송할 문제 리스트:", formattedQuestions);
 
-      const saveRes = await axios.post(`${API_BASE_URL}/room/${roomCode}/questions`, {
+      await axios.post(`${API_BASE_URL}/room/${roomCode}/questions`, {
         questions: formattedQuestions
       });
 

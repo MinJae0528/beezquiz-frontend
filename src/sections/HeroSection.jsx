@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { animateScroll as scroll } from "react-scroll";
 import TypeIt from "typeit-react";
 import "../styles/App.css";
 import heroimg from "../assets/img/heroimg.svg";
