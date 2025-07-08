@@ -1,327 +1,93 @@
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background-image: url('../assets/img/quizBackground.svg');
-  background-repeat: repeat;
-  background-position: center top;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
-.quiz-container {
-  width: 100vw;
-  min-height: 100vh;
-  position: relative;
-  font-family: 'Arial', sans-serif;
-  padding-bottom: 2.5rem;
-  overflow: auto;
-}
-
-.logo {
-  position: absolute;
-  top: 1.25rem;
-  left: 1.25rem;
-  width: 7.5rem;
-  z-index: 10;
-}
-
-.quiz-box {
-  background-image: url('../assets/img/Honey.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 90vw;
-  max-width: 50rem;
-  aspect-ratio: 1.5 / 1;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 4.5%;
-  box-sizing: border-box;
-  margin-top: 5rem;
-}
-
-.quiz-inputs {
-  width: 100%;
-  max-width: 37.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0;
-  padding: 0 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.form-group label {
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-  text-align: left;
-  font-size: 0.875rem;
-}
-
-.question-input,
-.answer-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.5rem;
-  font-size: 0.875rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-}
-
-.quiz-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  max-width: 18.75rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.add-question-btn,
-.start-btn {
-  background-color: #a86800;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
-}
-
-.add-question-btn:hover,
-.start-btn:hover {
-  background-color: #8a5a00;
-}
-
-/* Mobile devices (320px and up) */
-@media screen and (max-width: 480px) {
-  .quiz-container {
-      padding-bottom: 1.5rem;
-  }
-  
-  .logo {
-      top: 0.75rem;
-      left: 0.75rem;
-      width: 5rem;
-  }
-  
-  .quiz-box {
-      width: 95vw;
-      margin-top: 3rem;
-      aspect-ratio: 1.2 / 1;
-  }
-  
-  .quiz-inputs {
-      gap: 0.75rem;
-      padding: 0 0.5rem;
-  }
-  
-  .form-group label {
-      font-size: 0.8rem;
-  }
-  
-  .question-input,
-  .answer-input {
-      padding: 0.4rem;
-      font-size: 0.8rem;
-  }
-  
-  .quiz-buttons {
-      gap: 0.75rem;
-      margin: 1.5rem auto;
-      padding: 0 0.5rem;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-      padding: 0.6rem 1rem;
-      font-size: 0.9rem;
-  }
-}
-
-/* Tablet devices (481px to 768px) */
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .quiz-container {
-      padding-bottom: 2rem;
-  }
-  
-  .logo {
-      top: 1rem;
-      left: 1rem;
-      width: 6rem;
-  }
-  
-  .quiz-box {
-      width: 85vw;
-      margin-top: 4rem;
-  }
-  
-  .quiz-inputs {
-      gap: 0.875rem;
-      padding: 0 0.75rem;
-  }
-  
-  .form-group label {
-      font-size: 0.85rem;
-  }
-  
-  .question-input,
-  .answer-input {
-      padding: 0.45rem;
-      font-size: 0.85rem;
-  }
-  
-  .quiz-buttons {
-      gap: 0.875rem;
-      margin: 1.75rem auto;
-      padding: 0 0.75rem;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-      padding: 0.65rem 1.1rem;
-      font-size: 0.95rem;
-  }
-}
-
-/* Laptop devices (769px to 1024px) */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  .quiz-box {
-      width: 80vw;
-      max-width: 45rem;
-      margin-top: 4.5rem;
-  }
-  
-  .quiz-inputs {
-      max-width: 35rem;
-      gap: 1.125rem;
-  }
-  
-  .form-group label {
-      font-size: 0.9rem;
-  }
-  
-  .question-input,
-  .answer-input {
-      padding: 0.55rem;
-      font-size: 0.9rem;
-  }
-  
-  .quiz-buttons {
-      max-width: 20rem;
-      gap: 1.125rem;
-      margin: 2.25rem auto;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-      padding: 0.8rem 1.3rem;
-      font-size: 1.05rem;
-  }
-}
-
-/* Desktop devices (1025px and up) */
-@media screen and (min-width: 1025px) {
-  .quiz-box {
-      width: 75vw;
-      max-width: 55rem;
-      margin-top: 5.5rem;
-  }
-  
-  .quiz-inputs {
-      max-width: 40rem;
-      gap: 1.25rem;
-  }
-  
-  .form-group label {
-      font-size: 1rem;
-  }
-  
-  .question-input,
-  .answer-input {
-      padding: 0.6rem;
-      font-size: 1rem;
-  }
-  
-  .quiz-buttons {
-      max-width: 22rem;
-      gap: 1.25rem;
-      margin: 2.5rem auto;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-      padding: 0.85rem 1.4rem;
-      font-size: 1.1rem;
-  }
-}
-
-/* Large desktop devices (1440px and up) */
-@media screen and (min-width: 1440px) {
-  .quiz-box {
-      width: 70vw;
-      max-width: 60rem;
-      margin-top: 6rem;
-  }
-  
-  .quiz-inputs {
-      max-width: 45rem;
-      gap: 1.5rem;
-  }
-  
-  .form-group label {
-      font-size: 1.1rem;
-  }
-  
-  .question-input,
-  .answer-input {
-      padding: 0.7rem;
-      font-size: 1.1rem;
-  }
-  
-  .quiz-buttons {
-      max-width: 25rem;
-      gap: 1.5rem;
-      margin: 3rem auto;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-      padding: 0.9rem 1.5rem;
-      font-size: 1.2rem;
-  }
-}
-
-/* Landscape orientation adjustments for mobile */
-@media screen and (max-width: 768px) and (orientation: landscape) {
-  .quiz-box {
-      margin-top: 2rem;
-      aspect-ratio: 1.8 / 1;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: url('../assets/img/quizBackground.svg');
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
   }
   
   .quiz-container {
-      padding-bottom: 1rem;
+    width: 100vw;
+    min-height: 100vh;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+    padding-bottom: 40px;
+    overflow: auto;
   }
-}
-
-/* High DPI displays */
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-     screen and (min-resolution: 192dpi) {
+  
   .logo {
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
   }
-}
+  
+  .quiz-box {
+    background-image: url('../assets/img/Honey.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 80vw;
+    max-width: 800px;
+    aspect-ratio: 1.5 / 1;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 4.5%;
+    box-sizing: border-box;
+  }
+  
+  .quiz-inputs {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+  
+  .question-input,
+  .answer-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .quiz-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 30%;
+    margin: 32px auto;
+  }
+  
+  .add-question-btn,
+  .start-btn {
+    background-color: #a86800;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
