@@ -84,7 +84,7 @@ export default function HostQuizScreen() {
       {quizList.length > 0 && (
         <button
           onClick={handleNext}
-          className="mt-10 py-3 px-8 bg-yellow-400 rounded-lg text-xl font-semibold"
+          className="mt-[10vh] px-14 py-6 rounded-full bg-[#FECF4F] text-[#81491c] text-[3rem] leading-[2rem] font-extrabold border-4 border-[#81491c] hover:scale-105 active:scale-95 transition"
         >
           {currentIndex === quizList.length - 1
             ? "결과 확인하기"

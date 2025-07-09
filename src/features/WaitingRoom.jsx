@@ -36,8 +36,12 @@ export default function WaitingRoom() {
       </p>
 
       <div className="relative flex items-center justify-center">
-        <img src={honeyBlob} alt="code board" className="w-[600px] max-w-[80vw] select-none pointer-events-none" />
-        <span className="absolute inset-0 flex items-center justify-center text-5xl md:text-6xl font-extrabold tracking-widest text-white">
+        <img
+          src={honeyBlob}
+          alt=""
+          className="w-[55vw] max-w-[60vw] mt-[4vh] select-none pointer-events-none"
+        />
+        <span className="absolute inset-0 flex items-center justify-center text-[7rem] font-extrabold tracking-widest text-white">
           {roomId}
         </span>
       </div>

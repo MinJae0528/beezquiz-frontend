@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ResultChart from "../features/ResultChart";
 
 import logoImage from "../assets/img/Logo.png";
-import honeyImage from "../assets/img/quizbgbgbg.svg"; // 칠판 배경
+import blackboardImage from "../assets/img/quizbgbgbg.svg"; // 칠판 배경
 import backgroundImage from "../assets/img/quizBackground.svg"; // 전체 배경
 
 export default function ResultPage() {
@@ -54,17 +54,16 @@ export default function ResultPage() {
   return (
     <div
       className="flex flex-col min-h-screen w-screen bg-repeat"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* 상단 로고 */}
       <div className="flex justify-center pt-8 pb-4">
-        <img src={logoImage} alt="BeezQuiz Logo" className="w-[240px]" />
+        <img src={logoImage} alt="BeezQuiz Logo" className="h-[10vh]" />
       </div>
 
       {/* 칠판 결과 박스 */}
       <div
-        className="relative mx-auto w-[950px] min-h-[500px] bg-no-repeat bg-center bg-contain px-10 py-10"
-        style={{ backgroundImage: `url(${honeyImage})` }}
+        className="relative mx-auto w-[1000px] min-h-[500px] bg-no-repeat bg-center bg-contain px-10 py-10 mt-[10vh]"
+        style={{ backgroundImage: `url(${blackboardImage})` }}
       >
         <div className="flex justify-between px-2 text-[#81491c] font-extrabold text-xl mb-6">
           <span>참여인원 : {participants.length}</span>
@@ -78,7 +77,7 @@ export default function ResultPage() {
       <div className="flex justify-center mt-8 mb-12">
         <button
           onClick={handleExit}
-          className="bg-yellow-400 px-6 py-3 rounded-xl text-lg font-semibold shadow-md hover:brightness-110 transition"
+          className="mt-[5vh] px-14 py-6 rounded-full bg-[#FECF4F] text-[#81491c] text-[2rem] leading-[2rem] font-extrabold border-4 border-[#81491c] hover:scale-105 active:scale-95 transition"
         >
           나가기
         </button>

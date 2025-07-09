@@ -95,7 +95,7 @@ export default function StudentQuizScreen() {
       <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 h-[20vh] select-none pointer-events-none" />
 
       {/* 상단 중앙 문제 번호 */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
+      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black/40 text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
         {totalQuestions > 0 ? `${currentIndex + 1} / ${totalQuestions}` : "로딩 중..."}
       </div>
 
@@ -106,25 +106,25 @@ export default function StudentQuizScreen() {
 
       {/* 문제 영역 */}
       <div
-        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-8"
+        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-[15vh]"
         style={{ backgroundImage: `url(${bgbgbg})` }}
       >
-        <div className="w-[740px] h-[320px] text-3xl text-white text-left flex items-start justify-center pt-4">
+        <div className="w-[90%] h-[80%] text-3xl text-white text-left flex items-start justify-center pt-4">
           {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
         </div>
       </div>
 
       {/* 입력창 */}
-      <div className="mt-[24px] flex w-[1000px] h-[72px]">
+      <div className="mt-[10vh] flex w-[1000px] h-[72px]">
         <input
-          className="w-full h-full text-2xl px-4 border"
+          className="w-full h-full text-[2rem] px-4 border"
           placeholder="정답을 입력해주세요.."
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
         />
         <button
           onClick={handleSubmit}
-          className="w-[150px] h-full bg-yellow-400 text-xl font-semibold border-l border-gray-300"
+          className="w-[150px] h-full bg-yellow-400 text-[1.5rem] font-semibold border-l border-gray-300"
         >
           제출
         </button>
