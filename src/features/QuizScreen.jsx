@@ -92,15 +92,15 @@ export default function StudentQuizScreen() {
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-start pt-20">
       {/* 좌상단 로고 */}
-      <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 w-24" />
+      <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 h-[20vh] select-none pointer-events-none" />
 
       {/* 상단 중앙 문제 번호 */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-xl">
+      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
         {totalQuestions > 0 ? `${currentIndex + 1} / ${totalQuestions}` : "로딩 중..."}
       </div>
 
       {/* 상단 우측 제출 여부 */}
-      <div className="absolute top-6 right-6 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-lg">
+      <div className="absolute top-6 right-6 bg-black/40 text-white px-4 py-2 rounded text-[2rem] leading-[2rem] font-extrabold">
         제출: {hasSubmitted[currentIndex] ? "O" : "X"}
       </div>
 
@@ -109,7 +109,7 @@ export default function StudentQuizScreen() {
         className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-8"
         style={{ backgroundImage: `url(${bgbgbg})` }}
       >
-        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
+        <div className="w-[740px] h-[320px] text-3xl text-white text-left flex items-start justify-center pt-4">
           {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
         </div>
       </div>

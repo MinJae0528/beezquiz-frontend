@@ -28,10 +28,10 @@ export default function WaitingRoom() {
   }, [roomId, navigate]);
 
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center">
-      <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 w-24 select-none pointer-events-none" />
+    <div className="relative w-screen h-screen flex flex-col items-center justify-center gap-10">
+      <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 h-[20vh] select-none pointer-events-none" />
 
-      <p className="absolute top-4 right-4 text-2xl font-extrabold text-[#81491c]">
+      <p className="absolute top-4 right-[3rem] text-[3rem] leading-[2rem] font-extrabold text-[#81491c]">
         입장 인원: {count}
       </p>
 
