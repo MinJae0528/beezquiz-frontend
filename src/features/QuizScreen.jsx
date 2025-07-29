@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+// src/features/StudentQuizScreen.jsx
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import socket from "../socket";
 import logoImage from "../assets/img/BeezQuiz.svg";
@@ -6,125 +7,110 @@ import bgbgbg from "../assets/img/quizbgbgbg.svg";
 
 const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
+function normalizeType(type, options) {
+  const optCount = Array.isArray(options) ? options.filter(o => o?.trim()).length : 0;
+  if ((type === "objective" || type === "객관식") && optCount >= 2) return "objective";
+  return "subjective";
+}
+
 export default function StudentQuizScreen() {
   const { roomId } = useParams();
+  const navigate = useNavigate();
+
   const [quizList, setQuizList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answer, setAnswer] = useState("");
-  const [hasSubmitted, setHasSubmitted] = useState([]);
-  const navigate = useNavigate();
-  const answersRef = useRef([]);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [submittedAnswers, setSubmittedAnswers] = useState([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const currentQuiz = quizList[currentIndex];
 
   useEffect(() => {
+    if (!roomId || !API_BASE) return;
 
-    // 문제 불러오기
     fetch(`${API_BASE}/room/${roomId}/questions`)
       .then((res) => res.json())
       .then((data) => {
-        const questions = data.questions || [];
-        setQuizList(questions);
-        setHasSubmitted(new Array(questions.length).fill(false));
+        if (Array.isArray(data.questions)) {
+          const normalized = data.questions.map((q) => ({
+            ...q,
+            type: normalizeType(q.type, q.options),
+          }));
+          setQuizList(normalized);
+        }
       });
+  }, [roomId]);
 
-    // 소켓 이벤트 등록
-    socket.on("start-quiz", () => {
-      setCurrentIndex(0);
-    });
-
-    socket.on("next-question", (nextIndex) => {
-      setCurrentIndex(nextIndex);
+  useEffect(() => {
+    socket.on("next-question", (index) => {
+      setCurrentIndex(index);
       setAnswer("");
+      setSelectedOption("");
+      setHasSubmitted(false);
     });
 
     socket.on("quiz-finished", () => {
-      fetch(`${API_BASE}/result`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          roomCode: roomId,
-          nickname: localStorage.getItem("nickname") || "익명",
-          answers: answersRef.current,
-          role: "student",
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          alert(`제출 완료! 점수: ${data.score}`);
-          navigate(`/result/${roomId}`);
-        })
-        .catch((err) => {
-          console.error("결과 저장 실패:", err);
-        });
+      navigate(`/result/${roomId}`);
     });
 
-    // 이벤트 정리
     return () => {
-      socket.off("start-quiz");
       socket.off("next-question");
       socket.off("quiz-finished");
     };
-  }, [roomId, navigate]);
+  }, [navigate, roomId]);
 
-  const currentQuiz = quizList[currentIndex];
-  const totalQuestions = quizList.length;
+  const handleSubmitAnswer = () => {
+    const userAnswer =
+      currentQuiz.type === "objective" ? selectedOption : answer.trim();
 
-  const handleSubmit = () => {
-    if (!answer.trim()) return;
-
-    answersRef.current[currentIndex] = answer;
+    if (!userAnswer) return alert("정답을 입력해주세요.");
 
     socket.emit("submit-answer", {
       roomCode: roomId,
       questionIndex: currentIndex,
     });
 
-    setHasSubmitted((prev) => {
-      const updated = [...prev];
-      updated[currentIndex] = true;
-      return updated;
-    });
-
-    setAnswer("");
+    setSubmittedAnswers((prev) => [...prev, userAnswer]);
+    setHasSubmitted(true);
   };
 
+  if (!currentQuiz) return <div>문제를 불러오는 중...</div>;
+
   return (
-    <div className="relative w-screen h-screen flex flex-col items-center justify-start pt-20">
-      {/* 좌상단 로고 */}
-      <img src={logoImage} alt="Beez Quiz" className="absolute top-4 left-4 w-24" />
+    <div className="quiz-screen">
+      <img src={logoImage} alt="BeezQuiz" className="logo" />
+      <div className="question-box">
+        <h2>문제 {currentIndex + 1}</h2>
+        <p>{currentQuiz.text}</p>
 
-      {/* 상단 중앙 문제 번호 */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-xl">
-        {totalQuestions > 0 ? `${currentIndex + 1} / ${totalQuestions}` : "로딩 중..."}
-      </div>
+        {currentQuiz.type === "objective" ? (
+          <div className="options">
+            {currentQuiz.options.map((opt, index) => {
+              const val = (index + 1).toString(); // 정답은 "1"~"4" 형식
+              return (
+                <button
+                  key={index}
+                  onClick={() => setSelectedOption(val)}
+                  className={selectedOption === val ? "selected" : ""}
+                >
+                  {val}. {opt}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <textarea
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+            placeholder="정답 입력"
+          />
+        )}
 
-      {/* 상단 우측 제출 여부 */}
-      <div className="absolute top-6 right-6 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-lg">
-        제출: {hasSubmitted[currentIndex] ? "O" : "X"}
-      </div>
-
-      {/* 문제 영역 */}
-      <div
-        className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-8"
-        style={{ backgroundImage: `url(${bgbgbg})` }}
-      >
-        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
-          {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
-        </div>
-      </div>
-
-      {/* 입력창 */}
-      <div className="mt-[24px] flex w-[1000px] h-[72px]">
-        <input
-          className="w-full h-full text-2xl px-4 border"
-          placeholder="정답을 입력해주세요.."
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-        />
         <button
-          onClick={handleSubmit}
-          className="w-[150px] h-full bg-yellow-400 text-xl font-semibold border-l border-gray-300"
+          onClick={handleSubmitAnswer}
+          disabled={hasSubmitted}
+          className="submit-button"
         >
           제출
         </button>

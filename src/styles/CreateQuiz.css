@@ -1,93 +1,222 @@
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-image: url('../assets/img/quizBackground.svg');
-    background-repeat: repeat;
-    background-position: center top;
-    background-size: cover;
-    background-attachment: fixed;
-  }
-  
-  .quiz-container {
-    width: 100vw;
-    min-height: 100vh;
-    position: relative;
-    font-family: 'Arial', sans-serif;
-    padding-bottom: 40px;
-    overflow: auto;
-  }
-  
-  .logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 120px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-image: url('../assets/img/quizBackground.svg');
+  background-repeat: repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.quiz-container {
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  padding-bottom: 40px;
+  overflow: auto;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+}
+
+.quiz-box {
+  background-image: url('../assets/img/Honey.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 80vw;
+  max-width: 800px;
+  aspect-ratio: 1.5 / 1;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 32px 24px;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+}
+
+.quiz-inputs {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+/* 문제/정답/보기 공통 입력 크기 정리 */
+.question-input,
+.answer-input,
+.answer-select,
+.option-text {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+/* 문제 */
+.question-input {
+  resize: vertical;
+  min-height: 60px;
+  max-height: 200px;
+}
+
+/* 정답 */
+.answer-input,
+.answer-select {
+  min-height: 40px;
+  background-color: white;
+}
+
+/* 보기 (2열 구조) */
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  width: 100%;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fffbe7;
+  border-radius: 6px;
+  padding: 6px 8px;
+  border: 1px solid #e2c97a;
+  position: relative;
+}
+
+.option-label {
+  font-weight: bold;
+  min-width: 24px;
+  font-size: 1.1rem;
+}
+
+.option-text {
+  flex: 1;
+  min-height: 40px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.add-option-btn {
+  grid-column: span 2;
+  margin-top: 8px;
+  background: #ffe082;
+  color: #a86800;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.add-option-btn:hover {
+  background: #ffd54f;
+}
+
+.remove-option-btn {
+  background: #ffbdbd;
+  color: #a80000;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove-option-btn:hover {
+  background: #ff8a80;
+}
+
+.quiz-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 30%;
+  margin: 32px auto;
+}
+
+.add-question-btn,
+.start-btn {
+  background-color: #a86800;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.add-question-btn:hover,
+.start-btn:hover {
+  background-color: #fbc02d;
+  color: #a86800;
+}
+
+.start-btn:disabled {
+  background: #e0e0e0;
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
   .quiz-box {
-    background-image: url('../assets/img/Honey.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    width: 80vw;
-    max-width: 800px;
-    aspect-ratio: 1.5 / 1;
-    margin:auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 4.5%;
-    box-sizing: border-box;
+    width: 98vw;
+    max-width: 98vw;
+    padding: 16px 4vw;
   }
-  
   .quiz-inputs {
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
+    max-width: 95vw;
   }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+}
+
+@media (max-width: 600px) {
+  .quiz-box {
+    aspect-ratio: unset;
+    padding: 8vw 2vw;
   }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 4px;
-    text-align: left;
+  .quiz-inputs {
+    max-width: 99vw;
   }
-  
-  .question-input,
-  .answer-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    font-size: 14px;
+  .option-grid {
+    grid-template-columns: 1fr;
+    gap: 10px 0;
   }
-  
-  .quiz-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 30%;
-    margin: 32px auto;
-  }
-  
-  .add-question-btn,
-  .start-btn {
-    background-color: #a86800;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
+}

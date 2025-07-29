@@ -72,7 +72,7 @@ export default function HostQuizScreen() {
         style={{ backgroundImage: `url(${bgbgbg})` }}
       >
         <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
-          {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
+          {currentQuiz ? currentQuiz.text : "문제를 불러오는 중..."}
         </div>
       </div>
 

@@ -45,7 +45,14 @@ export default function ResultPage() {
     );
   }
 
-  const { averageScore, totalQuestions, participants } = summary;
+  // 방어적 처리
+  const participants = Array.isArray(summary.participants) ? summary.participants : [];
+  const totalQuestions = typeof summary.totalQuestions === 'number' ? summary.totalQuestions : 0;
+  const averageScore = typeof summary.averageScore === 'number' ? summary.averageScore : 0;
+
+  console.log("[결과] participants:", participants);
+  console.log("[결과] totalQuestions:", totalQuestions);
+  console.log("[결과] averageScore:", averageScore);
 
   const handleExit = () => {
     navigate("/");
