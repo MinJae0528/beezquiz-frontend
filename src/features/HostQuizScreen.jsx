@@ -20,22 +20,17 @@ export default function HostQuizScreen() {
     fetch(`${API_BASE_URL}/room/${roomCode}/questions`)
       .then((res) => res.json())
       .then((data) => {
-        // ✅ 응답이 { questions: [...] } 형태일 경우
         if (Array.isArray(data.questions)) {
           setQuizList(data.questions);
         } else {
           console.error("문제 형식이 올바르지 않습니다:", data);
           setQuizList([]);
         }
-      });
+      })
+      .catch((e) => console.error("문제 불러오기 실패:", e));
 
-    socket.on("submit-count", (count) => {
-      setSubmitCount(count);
-    });
-
-    return () => {
-      socket.off("submit-count");
-    };
+    socket.on("submit-count", (count) => setSubmitCount(count));
+    return () => socket.off("submit-count");
   }, [roomCode]);
 
   const handleNext = () => {
@@ -58,9 +53,7 @@ export default function HostQuizScreen() {
       </div>
 
       <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-xl">
-        {quizList.length > 0
-          ? `${currentIndex + 1} / ${quizList.length}`
-          : "문제를 불러오는 중..."}
+        {quizList.length > 0 ? `${currentIndex + 1} / ${quizList.length}` : "문제를 불러오는 중..."}
       </div>
 
       <div className="absolute top-6 right-6 bg-black bg-opacity-40 text-white px-4 py-2 rounded text-lg">
@@ -71,8 +64,8 @@ export default function HostQuizScreen() {
         className="flex justify-center items-center w-[1000px] h-[500px] rounded-lg mt-10"
         style={{ backgroundImage: `url(${bgbgbg})` }}
       >
-        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center">
-          {currentQuiz ? currentQuiz.question : "문제를 불러오는 중..."}
+        <div className="w-[740px] h-[320px] text-3xl text-[#ffffff] text-center flex items-center justify-center">
+          {currentQuiz ? (currentQuiz.text || currentQuiz.question_text) : "문제를 불러오는 중..."}
         </div>
       </div>
 
@@ -81,9 +74,7 @@ export default function HostQuizScreen() {
           onClick={handleNext}
           className="mt-10 py-3 px-8 bg-yellow-400 rounded-lg text-xl font-semibold"
         >
-          {currentIndex === quizList.length - 1
-            ? "결과 확인하기"
-            : "다음 문제"}
+          {currentIndex === quizList.length - 1 ? "결과 확인하기" : "다음 문제"}
         </button>
       )}
     </div>
