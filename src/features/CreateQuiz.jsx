@@ -41,7 +41,7 @@ const CreateQuiz = () => {
   // 유효성
   const isObjectiveValid = (q) => {
     const filled = q.options.filter((o) => o.trim() !== "");
-    return q.type === "multiple" && filled.length === 4 && q.answer;
+    return q.type === "objective" && filled.length === 4 && q.answer;
   };
   const isSubjectiveValid = (q) => q.question.trim() && q.answer.trim();
   const canSubmit = questions.every((q) =>
@@ -70,11 +70,11 @@ const CreateQuiz = () => {
 
       // 2) 문제 저장용 포맷
       const formattedQuestions = questions.map((q) => {
-        if (q.type === "multiple") {
+        if (q.type === "objective") {
           return {
             text: q.question,
             correctAnswer: q.answer, // "1"~"4"
-            type: "multiple",
+            type: "objective",
             options: q.options.map((opt) => opt.trim()),
           };
         }
@@ -85,6 +85,11 @@ const CreateQuiz = () => {
           options: [],
         };
       });
+
+      // 디버깅을 위한 로그 추가
+      console.log("🔍 백엔드로 전송할 문제 데이터:", formattedQuestions);
+      console.log("🔍 객관식 문제 개수:", formattedQuestions.filter(q => q.type === "objective").length);
+      console.log("🔍 서술형 문제 개수:", formattedQuestions.filter(q => q.type === "subjective").length);
 
       // 3) 문제 저장
       const saveRes = await fetch(`${API_BASE_URL}/room/${roomCode}/questions`, {
@@ -143,8 +148,8 @@ const CreateQuiz = () => {
                   <input
                     type="radio"
                     name={`type-${index}`}
-                    value="multiple"
-                    checked={q.type === "multiple"}
+                    value="objective"
+                    checked={q.type === "objective"}
                     onChange={(e) => handleChange(index, "type", e.target.value)}
                   />
                   객관식
@@ -152,7 +157,7 @@ const CreateQuiz = () => {
               </div>
             </div>
 
-            {q.type === "multiple" && (
+            {q.type === "objective" && (
               <div className="form-group">
                 <label>보기</label>
                 <div className="option-grid">
@@ -176,7 +181,7 @@ const CreateQuiz = () => {
 
             <div className="form-group">
               <label>정답</label>
-              {q.type === "multiple" ? (
+              {q.type === "objective" ? (
                 <select
                   value={q.answer}
                   onChange={(e) => handleChange(index, "answer", e.target.value)}

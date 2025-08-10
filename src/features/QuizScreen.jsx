@@ -23,22 +23,12 @@ export default function StudentQuizScreen() {
       .then((res) => res.json())
       .then((data) => {
         const questions = (data.questions || []).map((q) => {
-          // 백엔드 multiple → 프론트 objective
-          let normalizedType = q.type;
-          if (q.type === "multiple") normalizedType = "objective";
-
+          // 백엔드에서 전달하는 필드명과 일치
           return {
-            text: q.text || q.question_text || "",
-            type: normalizedType || "subjective",
-            options: Array.isArray(q.options)
-              ? q.options.filter((o) => o?.trim())
-              : [],
-            correctAnswer:
-              q.correctAnswer ||
-              q.correct_answer ||
-              q.short_answer ||
-              q.subjective_sample ||
-              "",
+            text: q.text || "", // 백엔드에서 text로 전달
+            type: q.type || "subjective", // 백엔드에서 type으로 전달
+            options: Array.isArray(q.options) ? q.options.filter((o) => o?.trim()) : [],
+            correctAnswer: q.correctAnswer || "",
           };
         });
 
@@ -93,15 +83,21 @@ export default function StudentQuizScreen() {
   const currentQuiz = quizList[currentIndex];
   const totalQuestions = quizList.length;
   
-  // 객관식 문제 판단 로직 수정
-  const isObjective = currentQuiz?.type === "objective" || 
-                     (currentQuiz?.options && currentQuiz.options.length > 0);
-  const isSubjective = !isObjective;
+  // 문제 유형 판단 로직 수정 - 더 정확하게
+  const hasOptions = currentQuiz?.options && Array.isArray(currentQuiz.options) && currentQuiz.options.length > 0;
+  const isObjective = currentQuiz?.type === "objective" || hasOptions;
+  const isSubjective = currentQuiz?.type === "subjective" || (!isObjective && !hasOptions);
 
+  // 디버깅을 위한 상세 로그
+  console.log("=== 문제 디버깅 정보 ===");
   console.log("현재 문제:", currentQuiz);
-  console.log("문제 유형:", currentQuiz?.type);
-  console.log("옵션 개수:", currentQuiz?.options?.length);
+  console.log("문제 유형 (type):", currentQuiz?.type);
+  console.log("옵션 배열:", currentQuiz?.options);
+  console.log("옵션 개수:", currentQuiz?.options?.length || 0);
+  console.log("hasOptions:", hasOptions);
   console.log("isObjective:", isObjective);
+  console.log("isSubjective:", isSubjective);
+  console.log("==========================");
 
   const handleSubmit = () => {
     if (hasSubmitted[currentIndex] || isSubmitting) return;
@@ -157,7 +153,7 @@ export default function StudentQuizScreen() {
       </div>
 
       {/* 객관식 옵션 표시 - 조건 수정 */}
-      {isObjective && currentQuiz?.options && currentQuiz.options.length > 0 && (
+      {isObjective && hasOptions && (
         <div className="mt-6 w-[1000px]">
           <div className="grid grid-cols-2 gap-4">
             {currentQuiz.options.map((option, idx) => {
@@ -208,7 +204,7 @@ export default function StudentQuizScreen() {
       )}
 
       {/* 서술형 입력 - 조건 수정 */}
-      {isSubjective && (
+      {isSubjective && !hasOptions && (
         <div className="mt-[24px] flex w-[1000px] h-[72px]">
           <input
             className="w-full h-full text-2xl px-4 border"
@@ -230,10 +226,13 @@ export default function StudentQuizScreen() {
       )}
 
       {/* 디버깅용 정보 표시 */}
-      <div className="mt-4 text-sm text-gray-600">
-        <p>문제 유형: {currentQuiz?.type}</p>
-        <p>옵션 개수: {currentQuiz?.options?.length || 0}</p>
-        <p>isObjective: {isObjective ? "true" : "false"}</p>
+      <div className="mt-4 text-sm text-gray-600 bg-gray-100 p-4 rounded">
+        <p><strong>문제 유형:</strong> {currentQuiz?.type || "undefined"}</p>
+        <p><strong>옵션 개수:</strong> {currentQuiz?.options?.length || 0}</p>
+        <p><strong>hasOptions:</strong> {hasOptions ? "true" : "false"}</p>
+        <p><strong>isObjective:</strong> {isObjective ? "true" : "false"}</p>
+        <p><strong>isSubjective:</strong> {isSubjective ? "true" : "false"}</p>
+        <p><strong>표시되는 화면:</strong> {isObjective && hasOptions ? "객관식" : isSubjective && !hasOptions ? "서술형" : "없음"}</p>
       </div>
     </div>
   );
